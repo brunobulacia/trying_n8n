@@ -12,6 +12,8 @@ class TareaViewSet(viewsets.ModelViewSet):
     serializer_class = TareaSerializer
     
     def get_queryset(self):
+        if self.request.user.is_staff:
+            return Tarea.objects.all()
         return Tarea.objects.filter(user=self.request.user)
     
     def perform_create(self, serializer):
