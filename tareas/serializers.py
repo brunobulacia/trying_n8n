@@ -4,6 +4,6 @@ from .models import Tarea
 class TareaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tarea
-        fields = ['id', 'titulo', 'descripcion', 'completada']
+        fields = ['id', 'titulo', 'descripcion', 'completada', 'user_id']
         read_only_fields = ['id']
         
