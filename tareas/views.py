@@ -2,8 +2,17 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Tarea
 from .serializers import TareaSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
-# Create your views here.
 class TareaViewSet(viewsets.ModelViewSet):
     queryset = Tarea.objects.all()
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
     serializer_class = TareaSerializer
+    
+    def get_queryset(self):
+        return Tarea.objects.filter(user=self.request.user)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
