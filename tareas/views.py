@@ -15,6 +15,8 @@ class TareaViewSet(viewsets.ModelViewSet):
         if self.request.user.is_staff:
             return Tarea.objects.all()
         return Tarea.objects.filter(user=self.request.user)
-    
+
     def perform_create(self, serializer):
+        print(self.request.user)
+        print(serializer)
         serializer.save(user=self.request.user)
